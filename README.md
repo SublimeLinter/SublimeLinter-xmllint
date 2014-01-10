@@ -19,7 +19,10 @@ Before using this plugin, you must ensure that `xmllint` is installed on your sy
 
 Once `xmllint` is installed, you must ensure it is in your system PATH so that SublimeLinter can find it. This may not be as straightforward as you think, so please read about [how linter executables are located][locating-executables] in the documentation.
 
-Once you have installed `xmllint` you can proceed to install the SublimeLinter-xmllint plugin if it is not yet installed.
+### Linter configuration
+In order for `xmllint` to be executed by SublimeLinter, you must ensure that its path is available to SublimeLinter. Before going any further, please read and follow the steps in [“Finding a linter executable”](http://sublimelinter.readthedocs.org/en/latest/troubleshooting.html#finding-a-linter-executable) through “Validating your PATH” in the documentation.
+
+Once `xmllint` is installed and configured, you can proceed to install the SublimeLinter-xmllint plugin if it is not yet installed.
 
 ### Plugin installation
 Please use [Package Control][pc] to install the linter plugin. This will ensure that the plugin will be updated when new versions are available. If you want to install from source so you can modify the source code, you probably know what you are doing so we won’t cover that here.
