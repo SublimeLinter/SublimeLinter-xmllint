@@ -1,7 +1,7 @@
 SublimeLinter-xmllint
 =========================
 
-[![Build Status](https://khancdn.eu/badges.php?service=https%3A%2F%2Ftravis-ci.org%2FSublimeLinter%2FSublimeLinter-xmllint.png%3Fbranch%3Dmaster)](https://travis-ci.org/SublimeLinter/SublimeLinter-xmllint)
+[![Build Status](https://travis-ci.org/SublimeLinter/SublimeLinter-xmllint.svg?branch=master)](https://travis-ci.org/SublimeLinter/SublimeLinter-xmllint)
 
 This linter plugin for [SublimeLinter][docs] provides an interface to [xmllint](http://xmlsoft.org/xmllint.html). It will be used with files that have the “XML” syntax.
 
