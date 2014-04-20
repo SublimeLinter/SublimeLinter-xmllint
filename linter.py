@@ -23,7 +23,7 @@ class Xmllint(Linter):
         r'^.+?:'
         r'(?P<line>\d+):.+?: '
         r'(?P<message>[^\r\n]+)\r?\n'
-        r'[^\r\n]+\r?\n'
+        r'[^\r\n]*\r?\n'
         r'(?P<col>[^\^]*)\^'
     )
     multiline = True
