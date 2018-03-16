@@ -19,12 +19,6 @@ class Xmllint(Linter):
 
     syntax = 'xml'
     cmd = 'xmllint --noout * -'
-    regex = (
-        r'^.+?:'
-        r'(?P<line>\d+):.+?: '
-        r'(?P<message>[^\r\n]+)\r?\n'
-        r'[^\r\n]*\r?\n'
-        r'(?P<col>[^\^]*)\^'
-    )
+    regex = r'^-:(?P<line>\d+):.+?: (?P<message>[^\r\n]+)(\r?\n[^\r\n]*\r?\n(?P<col>[^\^]*)\^)?'
     multiline = True
     error_stream = util.STREAM_STDERR
