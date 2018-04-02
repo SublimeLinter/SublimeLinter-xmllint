@@ -23,8 +23,8 @@ Before using this plugin, you must ensure that `xmllint` is installed on your sy
 In order for `xmllint` to be executed by SublimeLinter, you must ensure that its path is available to SublimeLinter. The docs cover [troubleshooting PATH configuration](http://sublimelinter.readthedocs.io/en/latest/troubleshooting.html#finding-a-linter-executable).
 
 ## Settings
-- SublimeLinter settings: http://sublimelinter.readthedocs.org/en/latest/settings.html
-- Linter settings: http://sublimelinter.readthedocs.org/en/latest/linter_settings.html
+- SublimeLinter settings: http://sublimelinter.com/en/latest/settings.html
+- Linter settings: http://sublimelinter.com/en/latest/linter_settings.html
 
 `xmllint` has many possible command line arguments ("args") which may be passed via the Linter settings.
 
