@@ -20,7 +20,11 @@ On recent versions of Mac OS X, `xmllint` comes pre-installed. To install `xmlli
      [sudo] apt-get install libxml2-utils
      ```
 
-2. On Windows, follow the instructions [here](http://flowingmotion.jojordan.org/2011/10/08/3-steps-to-download-xmllint/). There is another version on code.google.com, but that version is incompatible with this plugin.
+2. On Windows, either follow the instructions [here](http://flowingmotion.jojordan.org/2011/10/08/3-steps-to-download-xmllint/). There is another version on code.google.com, but that version is incompatible with this plugin.  A much quicker, easier and robust solution is to use [Chocolatey](https://chocolatey.org/) to install `xsltproc` which also installs `xmllint` (and all other required utilities):
+
+     ```text
+     $ choco install xsltproc
+     ```
 
 Please make sure that the path to `xmllint` is available to SublimeLinter.
 The docs cover [troubleshooting PATH configuration](http://sublimelinter.com/en/latest/troubleshooting.html#finding-a-linter-executable).
