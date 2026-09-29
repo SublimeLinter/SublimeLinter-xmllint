@@ -17,27 +17,44 @@ Linter = LinterModule.Xmllint
 CASES = {
     'ascii': {
         'source': '<r><a>eeee</a><b x="1" x="2"/></r>\n',
-        'output': '-:1: parser error : Attribute x redefined\n<r><a>eeee</a><b x="1" x="2"/></r>\n                            ^\n',
+        'output':
+            '-:1: parser error : Attribute x redefined\n'
+            '<r><a>eeee</a><b x="1" x="2"/></r>\n'
+            '                            ^\n',
         'col': 28,
     },
     'two_byte': {
         'source': '<r><a>\xe9\xe9\xe9\xe9</a><b x="1" x="2"/></r>\n',
-        'output': '-:1: parser error : Attribute x redefined\n<r><a>\xe9\xe9\xe9\xe9</a><b x="1" x="2"/></r>\n                                ^\n',
+        'output':
+            '-:1: parser error : Attribute x redefined\n'
+            '<r><a>\xe9\xe9\xe9\xe9</a><b x="1" x="2"/></r>\n'
+            '                                ^\n',
         'col': 28,
     },
     'emoji': {
         'source': '<r><a>\U0001f600</a><b x="1" x="2"/></r>\n',
-        'output': '-:1: parser error : Attribute x redefined\n<r><a>\U0001f600</a><b x="1" x="2"/></r>\n                            ^\n',
+        'output':
+            '-:1: parser error : Attribute x redefined\n'
+            '<r><a>\U0001f600</a><b x="1" x="2"/></r>\n'
+            '                            ^\n',
         'col': 25,
     },
     'long_ascii': {
-        'source': '<r>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<b x="1" x="2"/></r>\n',
-        'output': '-:1: parser error : Attribute x redefined\naaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<b x="1" x="2"\n                                                                               ^\n',
+        'source': '<r>' + 'a' * 120 + '<b x="1" x="2"/></r>\n',
+        'output': (
+            '-:1: parser error : Attribute x redefined\n'
+            + 'a' * 66 + '<b x="1" x="2"\n'
+            + ' ' * 79 + '^\n'
+        ),
         'col': 136,
     },
     'long_utf': {
-        'source': '<r>\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9<b x="1" x="2"/></r>\n',
-        'output': '-:1: parser error : Attribute x redefined\n\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9\xe9<b x="1" x="2"\n                                                                               ^\n',
+        'source': '<r>' + '\xe9' * 60 + '<b x="1" x="2"/></r>\n',
+        'output': (
+            '-:1: parser error : Attribute x redefined\n'
+            + '\xe9' * 33 + '<b x="1" x="2"\n'
+            + ' ' * 79 + '^\n'
+        ),
         'col': 76,
     },
 }
