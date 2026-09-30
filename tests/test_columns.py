@@ -67,8 +67,14 @@ class TestColumns(unittest.TestCase):
         errors = list(linter.find_errors(case['output']))
         self.assertEqual(len(errors), 1, errors)
         m = errors[0]
-        line, start, end = linter.reposition_match(m['line'], m['col'], m, VirtualView(case['source']))
-        return line, start, case['col']
+        before = dict(m)
+        error = linter.process_match(m, VirtualView(case['source']))
+        self.assertIsNotNone(error)
+        self.assertEqual(m, before)
+        col = case['col']
+        self.assertEqual(error['region'], sublime.Region(col, col + 1))
+        self.assertEqual(error['offending_text'], case['source'][col:col + 1])
+        return error['line'], error['start'], col
 
     def test_ascii_line_is_unchanged(self):
         line, start, expected = self.resolve('ascii')
@@ -97,3 +103,33 @@ class TestColumns(unittest.TestCase):
         self.assertEqual(len(errors), 1)
         self.assertEqual(errors[0]['line'], 0)
         self.assertIsNone(errors[0]['col'])
+        error = linter.process_match(errors[0], VirtualView(''))
+        self.assertEqual(error['region'], sublime.Region(0, 0))
+        self.assertEqual(error['offending_text'], '')
+
+    def test_empty_caret_prefix_is_zero_bytes(self):
+        self.assertWindow('<r>abc</r>\n', 'abc', 0, 3, 'abc')
+
+    def test_unmatched_context_keeps_the_original_fallback(self):
+        self.assertWindow('<r>source</r>\n', 'é😀x', 6, 2, '>')
+
+    def test_caret_past_the_window_saturates_at_its_end(self):
+        self.assertWindow('<r>é😀abc</r>\n', 'é😀', 99, 5, 'abc')
+
+    def test_repeated_window_keeps_the_preexisting_first_occurrence_ambiguity(self):
+        context = '<b x="1" x="2"/>'
+        source = '<r>' + context + '<a>é😀</a>' + context + '</r>\n'
+        self.assertWindow(source, context, 14, source.find(context) + 14, '/')
+
+    def assertWindow(self, source, context, caret, col, text):
+        output = '-:1: parser error : Attribute x redefined\n' + context + '\n' + ' ' * caret + '^\n'
+        linter = Linter(sublime.View(0), {})
+        match, = linter.find_errors(output)
+        self.assertEqual(match.col, caret)
+        before = dict(match)
+        error = linter.process_match(match, VirtualView(source))
+        self.assertIsNotNone(error)
+        self.assertEqual(match, before)
+        self.assertEqual({k: error[k] for k in ('line', 'start', 'region', 'offending_text')}, {
+            'line': 0, 'start': col, 'region': sublime.Region(col, col + len(text)), 'offending_text': text,
+        })
